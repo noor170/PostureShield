@@ -8,7 +8,9 @@ version = 1.0
 
 # ২০২৬ সালের জন্য রিকমেন্ডেড পাইথন এবং লাইব্রেরি সংস্করণ
 # OpenCV এবং MediaPipe এর জন্য 'shared' বা নির্দিষ্ট রেসিপি প্রয়োজন হতে পারে
-requirements = python3==3.11.x, kivy>=2.3.0, numpy, opencv-python-headless, mediapipe
+#requirementsts = python3==3.11.x, kivy>=2.3.0, numpy, opencv-python-headless, mediapipe
+# (section [app])
+requirements = python3==3.11.9,kivy>=2.3.0,numpy,opencv-python-headless,mediapipe
 
 orientation = portrait
 
@@ -20,7 +22,7 @@ permissions = CAMERA, INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 android.api = 34
 android.minapi = 21
 android.sdk = 34
-android.ndk = 27b
+android.ndk = 25b
 android.accept_sdk_license = True
 
 # আর্কিটেকচার (আধুনিক ফোনের জন্য arm64-v8a মাস্ট)

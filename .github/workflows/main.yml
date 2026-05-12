@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   build:
-    # Use Ubuntu 24.04 so runner actions execute with Node 24 compatibility
-    runs-on: ubuntu-24.04
+    # digreatbrian/buildozer-action@v2 installs libtinfo5, which is not available on Ubuntu 24.04
+    runs-on: ubuntu-22.04
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:

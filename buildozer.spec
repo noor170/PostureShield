@@ -8,7 +8,8 @@ version = 1.0
 
 # Android builds must use python-for-android recipes where available.
 # `opencv` has a recipe; `opencv-python-headless` and `mediapipe` do not.
-requirements = python3, kivy, numpy, opencv, libffi
+# Pin numpy below 2.x because current python-for-android OpenCV builds are known to fail with newer numpy.
+requirements = python3, kivy, numpy==1.26.4, opencv, libffi
 
 log_level = 2
 
@@ -25,8 +26,8 @@ android.sdk = 34
 android.ndk = 25b
 android.accept_sdk_license = True
 
-# আর্কিটেকচার (আধুনিক ফোনের জন্য arm64-v8a মাস্ট)
-android.archs = arm64-v8a, armeabi-v7a
+# Target only modern 64-bit Android devices for a more reliable CI build.
+android.archs = arm64-v8a
 
 # ক্যামেরা ব্যবহারের জন্য হার্ডওয়্যার ফিচার ঘোষণা
 android.features = android.hardware.camera, android.hardware.camera.autofocus

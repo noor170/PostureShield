@@ -20,3 +20,4 @@ jobs:
         with:
           name: PostureShield-Android
           path: bin/*.apk
+          

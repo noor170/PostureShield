@@ -7,6 +7,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+      
+      - name: Build with Buildozer
+        uses: kivy/buildozer-action@master
+        with:
+          save_build_dir: true
 
       # - name: Build with Buildozer
       #   uses: kivy/buildozer-action@master

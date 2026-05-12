@@ -2,12 +2,12 @@ name: Build Posture Shield APK
 on: [push, pull_request]
 
 env:
-  # Mandatory for 2026 builds to resolve Node.js 20/24 conflicts
+  # Opt-in to Node24 as required by the May 2026 migration period
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
-    # Use 22.04 as it is the most stable for Android NDK/Buildozer
+    # Ubuntu 22.04 remains the most stable environment for Buildozer NDK
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
@@ -16,14 +16,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          # Must use quotes to prevent 3.10 from being read as 3.1
+          # Quotes are mandatory to prevent 3.10 from being read as 3.1
           python-version: '3.10'
 
       - name: Build APK with Buildozer
+        # Using a stable community builder to avoid repository resolution errors
         uses: digreatbrian/buildozer-action@v2
         with:
           python-version: '3.10'
           buildozer-cmd: buildozer -v android debug
+
 
       # - name: Upload Artifacts
       #   # Updated to v4 to comply with 2026 storage requirements

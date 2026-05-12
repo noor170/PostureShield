@@ -6,18 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4[cite: 1]
+        uses: actions/checkout@v4
 
       - name: Build with Buildozer
-        # Using the official Kivy Buildozer action
-        uses: kivy/buildozer-action@master[cite: 5]
+        uses: kivy/buildozer-action@master
         with:
           save_build_dir: true
 
       - name: Upload APK
-        # Updated to v4 to fix the deprecation error
-        uses: actions/upload-artifact@v4[cite: 1]
+        uses: actions/upload-artifact@v4
         with:
           name: PostureShield-Android
           path: bin/*.apk
-          

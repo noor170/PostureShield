@@ -3,12 +3,14 @@ on: [push, pull_request]
 
 env:
   # Opt-in to Node24 as required by the May 2026 migration period
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   build:
-    # Ubuntu 22.04 remains the most stable environment for Buildozer NDK
-    runs-on: ubuntu-22.04
+    # Use Ubuntu 24.04 so runner actions execute with Node 24 compatibility
+    runs-on: ubuntu-24.04
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,9 +29,9 @@ jobs:
           buildozer-cmd: buildozer -v android debug
 
 
-      # - name: Upload Artifacts
-      #   # Updated to v4 to comply with 2026 storage requirements
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: PostureShield-Android
-      #     path: bin/*.apk
+      - name: Upload Artifacts
+        # Updated to v4 to comply with 2026 storage requirements
+        uses: actions/upload-artifact@v4
+        with:
+          name: PostureShield-Android
+          path: bin/*.apk

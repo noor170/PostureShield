@@ -6,13 +6,28 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,tflite
 version = 1.0
 
-# Requirements (Crucial for Android)
-requirements = python3,kivy,opencv-python,mediapipe,numpy
+# ২০২৬ সালের জন্য রিকমেন্ডেড পাইথন এবং লাইব্রেরি সংস্করণ
+# OpenCV এবং MediaPipe এর জন্য 'shared' বা নির্দিষ্ট রেসিপি প্রয়োজন হতে পারে
+requirements = python3==3.11.x, kivy>=2.3.0, numpy, opencv-python-headless, mediapipe
 
 orientation = portrait
-permissions = CAMERA, INTERNET
 
-# Android specific
-android.archs = arm64-v8a
+# ক্যামেরা এবং স্টোরেজ ব্যবহারের জন্য পারমিশন
+permissions = CAMERA, INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+
+# Android specific (আপডেট করা হয়েছে)
+# গুগল প্লে স্টোরের ২০২৬ সালের নিয়ম অনুযায়ী Target API Level কমপক্ষে ৩৪ হতে হবে
+android.api = 34
+android.minapi = 21
+android.sdk = 34
+android.ndk = 27b
+android.accept_sdk_license = True
+
+# আর্কিটেকচার (আধুনিক ফোনের জন্য arm64-v8a মাস্ট)
+android.archs = arm64-v8a, armeabi-v7a
+
+# ক্যামেরা ব্যবহারের জন্য হার্ডওয়্যার ফিচার ঘোষণা
+android.features = android.hardware.camera, android.hardware.camera.autofocus
+
+# লজিস্টিক সেটিংস
 android.allow_backup = True
-android.api = 31

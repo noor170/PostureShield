@@ -6,11 +6,9 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,tflite
 version = 1.0
 
-# ২০২৬ সালের জন্য রিকমেন্ডেড পাইথন এবং লাইব্রেরি সংস্করণ
-# OpenCV এবং MediaPipe এর জন্য 'shared' বা নির্দিষ্ট রেসিপি প্রয়োজন হতে পারে
-#requirementsts = python3==3.11.x, kivy>=2.3.0, numpy, opencv-python-headless, mediapipe
-# (section [app])
-requirements = python3==3.11.9, hostpython3==3.11.9, kivy, numpy, opencv-python-headless, mediapipe, libffi
+# Android builds must use python-for-android recipes where available.
+# `opencv` has a recipe; `opencv-python-headless` and `mediapipe` do not.
+requirements = python3, kivy, numpy, opencv, libffi
 
 log_level = 2
 

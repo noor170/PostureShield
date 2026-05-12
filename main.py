@@ -3,39 +3,50 @@ from kivy.uix.image import Image
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 import cv2
-import mediapipe as mp
 import time
 import numpy as np
+
+try:
+    import mediapipe as mp
+except ImportError:
+    mp = None
 
 class PostureShieldApp(App):
     def build(self):
         self.img = Image()
         self.capture = cv2.VideoCapture(0)
-        
-        # Mediapipe Setup
-        self.mp_pose = mp.solutions.pose
-        self.pose = self.mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
-        
+
+        self.pose = None
+        if mp is not None:
+            self.mp_pose = mp.solutions.pose
+            self.pose = self.mp_pose.Pose(
+                min_detection_confidence=0.5,
+                min_tracking_confidence=0.5,
+            )
+
         self.standard_y = None
         self.calibrated = False
         self.start_time = time.time()
-        
+
         Clock.schedule_interval(self.update, 1.0 / 30.0)
         return self.img
 
     def update(self, dt):
         ret, frame = self.capture.read()
-        if not ret: return
+        if not ret:
+            return
 
         frame = cv2.flip(frame, 1)
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = self.pose.process(rgb_frame)
+        results = None
+        if self.pose is not None:
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = self.pose.process(rgb_frame)
 
         current_time = time.time()
-        
-        if results.pose_landmarks:
+
+        if results and results.pose_landmarks:
             nose_y = results.pose_landmarks.landmark[0].y
-            
+
             if not self.calibrated:
                 if current_time - self.start_time > 3:
                     self.standard_y = nose_y

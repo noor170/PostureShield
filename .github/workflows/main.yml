@@ -29,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer cython==0.29.33
 
-      - name: Install Build Tools 
+      - name: Install Build Tools
         run: sudo apt-get install -y cmake ninja-build build-essential
 
       - name: Build APK with Buildozer

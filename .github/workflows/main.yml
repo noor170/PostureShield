@@ -1,14 +1,9 @@
 name: Build Posture Shield APK
 on: [push, pull_request]
 
-env:
-  # Forces the runner to use Node 24 as required by the 2026 deprecation notice
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
-    # Using 24.04 to match the Node 24 requirement
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -16,14 +11,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          # Explicitly using 3.10.x to avoid the '3.1' resolution error
+          # Quotes are mandatory here to prevent 3.10 becoming 3.1
           python-version: '3.10'
 
       - name: Build APK with Buildozer
-        # Using a direct, verified action for the build process
         uses: digreatbrian/buildozer-action@v2
         with:
-          python-version: 3.10
+          python-version: '3.10'
           buildozer-cmd: buildozer -v android debug
 
       - name: Upload Artifacts
@@ -31,4 +25,3 @@ jobs:
         with:
           name: PostureShield-Android
           path: bin/*.apk
-          

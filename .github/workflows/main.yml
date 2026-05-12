@@ -15,10 +15,11 @@ jobs:
           python-version: '3.10'
 
       - name: Build APK with Buildozer
-        # Using the official stable Kivy action
-        uses: kivy/buildozer-action@master
+        # Using a verified accessible builder path
+        uses: digreatbrian/buildozer-action@v2
         with:
-          save_build_dir: true
+          python-version: 3.10
+          buildozer-cmd: buildozer -v android debug
 
       # - name: Upload Artifacts
       #   # Updated to v4 to fix the artifact deprecation error

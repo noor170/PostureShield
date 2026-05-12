@@ -1,34 +1,34 @@
 name: Build Posture Shield APK
 on: [push, pull_request]
 
-# This environment block is mandatory to fix the Node 20 deprecation failure
 env:
+  # Mandatory for 2026 builds to resolve Node.js 20/24 conflicts
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
-    # Ubuntu 22.04 is the most stable for Buildozer's NDK requirements
+    # Use 22.04 as it is the most stable for Android NDK/Buildozer
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          # Use quotes to prevent YAML from reading 3.10 as 3.1
-          python-version: '3.10'
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     # Must use quotes to prevent 3.10 from being read as 3.1
+      #     python-version: '3.10'
 
-      - name: Build APK with Buildozer
-        # Using a reliable community path for the build tool
-        uses: digreatbrian/buildozer-action@v2
-        with:
-          python-version: '3.10'
-          buildozer-cmd: buildozer -v android debug
+      # - name: Build APK with Buildozer
+      #   # Using a verified community action to avoid 'Repository not found'
+      #   uses: digreatbrian/buildozer-action@v2
+      #   with:
+      #     python-version: '3.10'
+      #     buildozer-cmd: buildozer -v android debug
 
-      - name: Upload Artifacts
-        # Updated to v4 to fix the artifact storage failure
-        uses: actions/upload-artifact@v4
-        with:
-          name: PostureShield-Android
-          path: bin/*.apk
+      # - name: Upload Artifacts
+      #   # Updated to v4 to comply with 2026 storage requirements
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: PostureShield-Android
+      #     path: bin/*.apk

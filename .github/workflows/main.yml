@@ -13,11 +13,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     # Must use quotes to prevent 3.10 from being read as 3.1
-      #     python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Must use quotes to prevent 3.10 from being read as 3.1
+          python-version: '3.10'
 
       # - name: Build APK with Buildozer
       #   # Using a verified community action to avoid 'Repository not found'

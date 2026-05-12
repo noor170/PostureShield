@@ -12,11 +12,8 @@ jobs:
         uses: kivy/buildozer-action@master
         with:
           save_build_dir: true
-
-      # - name: Build with Buildozer
-      #   uses: kivy/buildozer-action@master
-      #   with:
-      #     save_build_dir: true
+      
+    
 
       # - name: Upload APK
       #   uses: actions/upload-artifact@v4

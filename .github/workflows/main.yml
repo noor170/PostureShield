@@ -1,9 +1,12 @@
-name: Build Posture Shield APK
-on: [push, pull_request]
+name: Build Posture Shield
+on: [push, pull_request, workflow_dispatch]
 
 env:
   # Opt-in to Node24 as required by the May 2026 migration period
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -13,10 +16,10 @@ jobs:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           # Quotes are mandatory to prevent 3.10 from being read as 3.1
           python-version: '3.10'
@@ -31,7 +34,38 @@ jobs:
 
       - name: Upload Artifacts
         # Updated to v4 to comply with 2026 storage requirements
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: PostureShield-Android
           path: bin/*.apk
+          if-no-files-found: error
+
+  qodana:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Qodana Scan
+        uses: JetBrains/qodana-action@v2026.1
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        with:
+          pr-mode: ${{ github.event_name == 'pull_request' }}
+          use-caches: true
+          post-pr-comment: true
+          use-annotations: true
+          upload-result: true
+          push-fixes: 'none'

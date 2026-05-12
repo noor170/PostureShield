@@ -10,7 +10,9 @@ version = 1.0
 # OpenCV এবং MediaPipe এর জন্য 'shared' বা নির্দিষ্ট রেসিপি প্রয়োজন হতে পারে
 #requirementsts = python3==3.11.x, kivy>=2.3.0, numpy, opencv-python-headless, mediapipe
 # (section [app])
-requirements = python3==3.11.9,kivy>=2.3.0,numpy,opencv-python-headless,mediapipe
+requirements = python3==3.11.9, hostpython3==3.11.9, kivy, numpy, opencv-python-headless, mediapipe, libffi
+
+log_level = 2
 
 orientation = portrait
 

@@ -6,10 +6,9 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,tflite
 version = 1.0
 
-# Android builds must use python-for-android recipes where available.
-# `opencv` has a recipe; `opencv-python-headless` and `mediapipe` do not.
-# Pin numpy below 2.x because current python-for-android OpenCV builds are known to fail with newer numpy.
-requirements = python3, kivy, numpy==1.26.4, opencv, libffi
+# Keep Android dependencies minimal for a reliable CI build.
+# OpenCV and MediaPipe are not currently part of this Android package.
+requirements = python3, kivy
 
 log_level = 2
 
